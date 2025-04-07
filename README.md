@@ -27,21 +27,56 @@ NoProp introduces three paradigm shifts:
    - Avoids weight transport problem
    - Local learning only (no global gradients)
 
+---
+
 ## 📜 Mathematical Foundations
 
-### Forward Diffusion Process
-Gradually corrupts clean labels $u_y$ with noise:
+### Forward Diffusion Process (Noising)
 
-$$
+NoProp gradually corrupts clean labels through a Markov chain of noise additions:
+
+#### 1. Noise Corruption Equation
+```math
 z_t = \sqrt{\alpha_t} z_{t-1} + \sqrt{1-\alpha_t} \epsilon_t
-$$
-
+```
+Where:
 - $z_t$: Noisy label at step $t$
-- $\alpha_t$: Noise schedule (e.g., linear/cosine)
+- $\alpha_t$: Noise schedule ($\alpha_0=1 \rightarrow \alpha_T\approx0$)
 - $\epsilon_t \sim \mathcal{N}(0,I)$: Gaussian noise
+- $z_0 = u_y$: Ground truth one-hot label
 
-*Example*: For MNIST with $\alpha_t=0.9$:  
-`[0,0,1,0] → [0.1,0.05,0.8,0.05] → ... → pure noise`
+#### 2. Noise Schedule Properties
+| Parameter | Role | Typical Value |
+|-----------|------|---------------|
+| $\alpha_t$ | Controls noise level | Linear: $1 \rightarrow 0.1$ |
+| $T$ | Total steps | 10-1000 |
+| $\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$ | Cumulative product | (automatically computed) |
+
+#### 3. Step-by-Step Example (MNIST)
+Given label "2" ($u_y = [0,0,1,0,...]$):
+
+| Step $t$ | $\alpha_t$ | $z_t$ (Visualized) | Noise Level |
+|---------|-----------|--------------------|------------|
+| 0 | 1.0 | [0, 0, 1.0, 0] | 0% |
+| 1 | 0.9 | [0, 0.1, 0.85, 0.05] | 10% |
+| 2 | 0.7 | [0.05, 0.15, 0.7, 0.1] | 30% |
+| ... | ... | ... | ... |
+| T | 0.1 | [0.25, 0.25, 0.3, 0.2] | 90% |
+
+#### 4. Key Properties
+1. **Gradual Corruption**:
+   ```math
+   \text{SNR}(t) = \frac{\alpha_t}{1-\alpha_t} \quad \text{(Monotonically decreases)}
+   ```
+2. **Variance-Preserving**:
+   ```math
+   \text{Var}(z_t) = \text{Var}(z_{t-1}) = 1
+   ```
+3. **Closed-Form Sampling**:
+   ```math
+   q(z_t|u_y) = \mathcal{N}(z_t; \sqrt{\bar{\alpha}_t}u_y, (1-\bar{\alpha}_t)I)
+   ```
+
 
 ### Reverse Process (Training)
 Each MLP layer $t$ predicts clean labels from noisy inputs:
@@ -60,7 +95,7 @@ During inference, NoProp iteratively refines noisy labels through learned denois
 
 #### 1. Denoising Update Rule
 ```math
-z_{t-1} = \sqrt{\alpha_{t-1}} \underbrace{\hat{u}_\theta(z_t,x)}_{\text{Predicted clean label}} + \sqrt{1-\alpha_{t-1}} \epsilon_t
+z_{t-1} = \sqrt{\alpha_{l-1}} \underbrace{\hat{u}_\theta(z_t,x)}_{\text{Predicted clean label}} + \sqrt{1-\alpha_{t-1}} \epsilon_t
 ```
 
 Where:
