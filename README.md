@@ -47,12 +47,12 @@ $$
 Each MLP layer $t$ predicts clean labels from noisy inputs:
 
 $$
-mathcal{L}_t = \mathbb{E} \| \hat{u}_\theta(z_t,x) - u_y \|^2
+\mathcal{L}_t = \mathbb{E} \| \hat{u}_\theta(z_t,x) - u_y \|^2
 $$
 
 - $\hat{u}_\theta$: MLP prediction
 - $x$: Input image features
-- $u_y$: Ground truth one-hot labe
+- $u_y$: Ground truth one-hot label
 
 ## ⚙️ Implementation
 
