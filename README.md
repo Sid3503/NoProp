@@ -55,6 +55,43 @@ Where:
 - $x$: Input image features  
 - $u_y$: Ground truth one-hot label
 
+
+During inference, NoProp iteratively refines noisy labels through learned denoising steps:
+
+#### 1. Denoising Update Rule
+```math
+z_{t-1} = \sqrt{\alpha_{t-1}} \underbrace{\hat{u}_\theta(z_t,x)}_{\text{Predicted clean label}} + \sqrt{1-\alpha_{t-1}} \epsilon_t
+```
+
+Where:
+- $z_t$: Noisy label at step $t$
+- $\hat{u}_\theta(z_t,x)$: MLP's prediction of clean label
+- $\alpha_{t-1}$: Noise schedule value
+- $\epsilon_t \sim \mathcal{N}(0,I)$: Fresh Gaussian noise
+
+#### 2. Step-by-Step Process
+1. **Start from noise**: $z_T \sim \mathcal{N}(0,I)$
+2. **Iterate for** $t=T$ to $1$:
+   - Predict $\hat{u}_\theta(z_t,x)$ using MLP
+   - Compute $z_{t-1}$ via denoising update
+3. **Final prediction**: $\arg\max(z_0)$
+
+#### Example (MNIST)
+| Step | $z_t$ (Noisy)          | $\hat{u}_\theta(z_t,x)$ (Predicted) | $z_{t-1}$ (Refined)       |
+|------|-------------------------|-------------------------------------|---------------------------|
+| t=3  | [0.4, 0.3, 0.3]         | [0.1, 0.0, 0.9]                     | [0.25, 0.05, 0.7]         |
+| t=2  | [0.25, 0.05, 0.7]       | [0.0, 0.0, 1.0]                     | [0.1, 0.0, 0.9]           |
+| t=1  | [0.1, 0.0, 0.9]         | [0.0, 0.0, 1.0]                     | [0.0, 0.0, 1.0] (Final)   |
+
+#### Key Properties
+1. **Noise Injection**: 
+   - The $\sqrt{1-\alpha_{t-1}} \epsilon_t$ term prevents deterministic collapse
+2. **Geometric Interpolation**:
+   - Balances between prediction ($\sqrt{\alpha_{t-1}}$) and noise ($\sqrt{1-\alpha_{t-1}}$)
+3. **Stochasticity**:
+   - Different noise samples $\epsilon_t$ yield varied trajectories
+
+
 ## ⚙️ Implementation
 
 ### Core Components
