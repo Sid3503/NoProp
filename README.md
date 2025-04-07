@@ -31,7 +31,7 @@ NoProp introduces three paradigm shifts:
 
 ## 📜 Mathematical Foundations
 
-### Forward Diffusion Process (Noising)
+### A. Forward Diffusion Process (Noising)
 
 NoProp gradually corrupts clean labels through a Markov chain of noise additions:
 
@@ -78,7 +78,7 @@ Given label "2" ($u_y = [0,0,1,0,...]$):
    ```
 
 
-### Reverse Process (Training)
+### B. Reverse Process (Training)
 Each MLP layer $t$ predicts clean labels from noisy inputs:
 
 ```math
