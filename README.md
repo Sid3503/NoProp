@@ -111,14 +111,14 @@ Where:
    - Compute $z_{t-1}$ via denoising update
 3. **Final prediction**: $\arg\max(z_0)$
 
-#### Example (MNIST)
+#### 3. Example (MNIST)
 | Step | $z_t$ (Noisy)          | $\hat{u}_\theta(z_t,x)$ (Predicted) | $z_{t-1}$ (Refined)       |
 |------|-------------------------|-------------------------------------|---------------------------|
 | t=3  | [0.4, 0.3, 0.3]         | [0.1, 0.0, 0.9]                     | [0.25, 0.05, 0.7]         |
 | t=2  | [0.25, 0.05, 0.7]       | [0.0, 0.0, 1.0]                     | [0.1, 0.0, 0.9]           |
 | t=1  | [0.1, 0.0, 0.9]         | [0.0, 0.0, 1.0]                     | [0.0, 0.0, 1.0] (Final)   |
 
-#### Key Properties
+#### 4. Key Properties
 1. **Noise Injection**: 
    - The $\sqrt{1-\alpha_{t-1}} \epsilon_t$ term prevents deterministic collapse
 2. **Geometric Interpolation**:
