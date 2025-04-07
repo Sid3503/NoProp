@@ -44,15 +44,16 @@ $$
 `[0,0,1,0] → [0.1,0.05,0.8,0.05] → ... → pure noise`
 
 ### Reverse Process (Training)
-Each MLP layer $t$ predicts clean labels from noisy inputs:
+
+Each MLP layer \( t \) predicts clean labels from noisy inputs:
 
 $$
-\mathcal{L}_t = \mathbb{E} \| \hat{u}_\theta(z_t,x) - u_y \|^2
+\mathcal{L}_t = \mathbb{E} \left\| \hat{u}_\theta(z_t, x) - u_y \right\|^2
 $$
 
-- $\hat{u}_\theta$: MLP prediction
-- $x$: Input image features
-- $u_y$: Ground truth one-hot label
+- \( \hat{u}_\theta \): MLP prediction
+- \( x \): Input image features
+- \( u_y \): Ground truth one-hot label
 
 ## ⚙️ Implementation
 
