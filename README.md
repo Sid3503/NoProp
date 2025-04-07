@@ -11,9 +11,7 @@ Official implementation of **NoProp**, a novel neural network training method th
 - [Mathematical Foundations](#-mathematical-foundations)
 - [Implementation](#-implementation)
 - [Results](#-results)
-- [Getting Started](#-getting-started)
-- [Citation](#-citation)
-
+  
 ## 🚀 Key Innovations
 NoProp introduces three paradigm shifts:
 
@@ -90,5 +88,7 @@ for t in range(T):
 *Training 3x faster than backprop on multi-GPU setups*
 
 
-## 🤝 Contributing
-PRs welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+## 👤 Author
+
+For any questions or issues, please open an issue on GitHub: [@Siddharth Mishra](https://github.com/Sid3503)
+
