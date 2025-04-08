@@ -48,9 +48,12 @@ Where:
 #### 2. Noise Schedule Properties
 | Parameter | Role | Typical Value |
 |-----------|------|---------------|
-| `αₜ` | Controls noise level | Linear: `1.0 → 0.1` |
+| `αₜ` | Controls noise level | Linear: `1.0 → 0.1` | - [1]
 | `T` | Total steps | 10-1000 |
-| `ᾱₜ = ∏ αₛ` (s=1 to t) | Cumulative product | (auto-computed) |
+| `ᾱₜ = ∏ αₛ` (s=1 to t) | Cumulative product | (auto-computed) | - [2]
+
+[1]: `αₜ` decreases linearly  
+[2]: `ᾱₜ = α₁ × α₂ × ... × αₜ`
 
 #### 3. Step-by-Step Example (MNIST)
 Given label "2" ($u_y = [0,0,1,0,...]$):
