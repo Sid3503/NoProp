@@ -48,9 +48,9 @@ Where:
 #### 2. Noise Schedule Properties
 | Parameter | Role | Typical Value |
 |-----------|------|---------------|
-| $\alpha_t$ | Controls noise level | Linear: $1 \rightarrow 0.1$ |
-| $T$ | Total steps | 10-1000 |
-| $\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$ | Cumulative product | (automatically computed) |
+| `αₜ` | Controls noise level | Linear: `1.0 → 0.1` |
+| `T` | Total steps | 10-1000 |
+| `ᾱₜ = ∏ αₛ` (s=1 to t) | Cumulative product | (auto-computed) |
 
 #### 3. Step-by-Step Example (MNIST)
 Given label "2" ($u_y = [0,0,1,0,...]$):
