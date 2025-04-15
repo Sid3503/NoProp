@@ -152,17 +152,7 @@ for t in range(T):
 - **Parallel Training**: All `T` MLPs update simultaneously
 - **Memory Efficient**: No activation storage
 - **Flexible**: Works with CNNs/Transformers
-
-## 📊 Results
-
-| Method       | MNIST Acc |
-|--------------|-----------|
-| NoProp (Ours)| 99.5%     |
-| Backprop     | 99.4%     |
-| Forward-Forward| 98.6%    |
-
-*Training 3x faster than backprop on multi-GPU setups*
-
+  
 
 ## 👤 Author
 
