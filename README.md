@@ -155,11 +155,11 @@ for t in range(T):
 
 ## 📊 Results
 
-| Method       | MNIST Acc | CIFAR-10 Acc | GPU Mem (GB) |
-|--------------|-----------|--------------|--------------|
-| NoProp (Ours)| 99.5%     | 80.5%        | 0.64         |
-| Backprop     | 99.4%     | 79.9%        | 1.17         |
-| Forward-Forward| 98.6%    | -            | 1.05         |
+| Method       | MNIST Acc |
+|--------------|-----------|
+| NoProp (Ours)| 99.5%     |
+| Backprop     | 99.4%     |
+| Forward-Forward| 98.6%    |
 
 *Training 3x faster than backprop on multi-GPU setups*
 
